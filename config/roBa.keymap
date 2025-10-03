@@ -66,24 +66,24 @@
     };
 
     behaviors {
-    col4_f13_layer: col4_f13_layer {
+    col4_f13_mouse: col4_f13_mouse {
         compatible = "zmk,behavior-hold-tap";
-        label = "Col4_F13_Layer";
+        label = "Col4_F13_Mouse";
         #binding-cells = <2>;
         tapping-term-ms = <200>;
         quick-tap-ms = <200>;
         flavor = "tap-preferred";
-        bindings = <&kp F13>, <&mo 4>;
+        bindings = <&kp F13>, <&mo 4>;   // Layer4 = マウスレイヤー
     };
 
-    col6_f14_layer: col6_f14_layer {
+    col6_f14_num: col6_f14_num {
         compatible = "zmk,behavior-hold-tap";
-        label = "Col6_F14_Layer";
+        label = "Col6_F14_Num";
         #binding-cells = <2>;
         tapping-term-ms = <200>;
         quick-tap-ms = <200>;
         flavor = "tap-preferred";
-        bindings = <&kp F14>, <&mo 6>;
+        bindings = <&kp F14>, <&mo 5>;   // Layer5 = 数字レイヤー
     };
 
         lt_to_layer_0: lt_to_layer_0 {
@@ -104,7 +104,7 @@
 &kp Q             &kp W         &kp E         &kp R                        &kp T                                                          &kp Y        &kp U  &lt 5 I    &kp O    &kp P
 &kp A             &kp S         &kp D         &kp F                        &kp G        &kp LS(LG(S))                      &kp MINUS      &kp H        &kp J  &kp K      &kp L    &kp SQT
 &mt LEFT_SHIFT Z  &kp X         &kp C         &kp V                        &kp B        &kp COLON                          &kp SEMICOLON  &kp N        &kp M  &kp COMMA  &kp DOT  &kp SLASH
-&kp LCTRL         &kp LEFT_WIN  &kp LEFT_ALT  &col4_f13_layer  &lt 2 SPACE  &col6_f14_layer      &kp BACKSPACE  &lt 1 ENTER                             &kp DEL
+&kp LCTRL   &kp LEFT_WIN   &kp LEFT_ALT   &col4_f13_mouse   &lt 2 SPACE   &col6_f14_num   &kp BACKSPACE   &lt 1 ENTER   &kp DEL
             >;
 
             sensor-bindings = <&inc_dec_kp PG_UP PAGE_DOWN>;

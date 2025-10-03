@@ -1,5 +1,39 @@
-on: [push, pull_request, workflow_dispatch]
+name: Build ZMK firmware
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
   build:
-    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        board: [nice_nano_v2]        # roBa v2 のマイコン
+        shield: [roBa_L, roBa_R]     # 左右分割型シールド
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install west and dependencies
+        run: |
+          pip3 install west
+          sudo apt-get update
+          sudo apt-get install -y ninja-build cmake gperf dfu-util device-tree-compiler wget \
+                                  python3-pip python3-setuptools python3-wheel xz-utils file make gcc
+
+      - name: Clone ZMK
+        run: |
+          git clone https://github.com/zmkfirmware/zmk.git zmk
+          west init -l zmk/app
+          west update
+
+      - name: Build firmware
+        run: |
+          west build -s zmk/app -b ${{ matrix.board }} -- -DSHIELD=${{ matrix.shield }} -DZMK_CONFIG=${{ github.workspace }}/config
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: firmware-${{ matrix.shield }}
+          path: build/zephyr/zmk.uf2
